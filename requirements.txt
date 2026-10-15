@@ -1,0 +1,9 @@
+Django==6.1.2
+djangorestframework==3.18.3
+channels==4.3.2
+daphne==4.2.3
+django-simple-captcha==0.7.0
+Pillow==12.3.0
+psycopg[binary]==3.3.6
+python-dotenv==1.2.4
+defusedxml==0.7.1
