@@ -2,6 +2,11 @@ from captcha.helpers import captcha_image_url
 from captcha.models import CaptchaStore
 from django.db import transaction
 from django.utils import timezone
+
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET
+
 from rest_framework import filters, generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
@@ -9,7 +14,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Comment
+from .models import Comment, CommentAttachment
 from .serializers import CommentSerializer
 
 
@@ -74,3 +79,25 @@ class CaptchaAPIView(APIView):
             'captcha_key': captcha_key,
             'captcha_image': request.build_absolute_uri(image_url),
         })
+
+
+@require_GET
+def view_txt_attachment(request, comment_id):
+    attachment = get_object_or_404(
+        CommentAttachment,
+        comment_id=comment_id
+    )
+
+    if not attachment.file or not attachment.file.name.lower().endswith('.txt'):
+        raise Http404('TXT attachment not found')
+
+    with attachment.file.open('rb') as file:
+        content = file.read(100 * 1024 + 1)
+
+    if len(content) > 100 * 1024:
+        return HttpResponse('TXT file too large', status=413)
+
+    return HttpResponse(
+        content,
+        content_type='text/plain; charset=utf-8'
+    )

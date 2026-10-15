@@ -410,15 +410,41 @@ function isImage(url) {
   )
 }
 
-function openAttachment(url) {
+function openAttachment(attachment) {
+  const url = typeof attachment === 'string'
+    ? attachment
+    : attachment?.attachment_url
+
+  const commentId = typeof attachment === 'object' && attachment !== null
+    ? attachment.id
+    : null
+
   const safe = mediaUrl(url)
   if (!safe) return
 
+  // Изображения открываем в модальном окне
   if (isImage(url)) {
     modal.value = safe
-  } else {
-    window.open(safe, '_blank', 'noopener,noreferrer')
+    return
   }
+
+  // TXT открываем через Django с кодировкой UTF-8
+  const pathname = new URL(safe, window.location.origin).pathname
+
+  if (
+    pathname.toLowerCase().endsWith('.txt') &&
+    Number.isSafeInteger(commentId) &&
+    commentId > 0
+  ) {
+    window.open(
+      `${API}${commentId}/attachment/txt/`,
+      '_blank',
+      'noopener,noreferrer'
+    )
+    return
+  }
+
+  window.open(safe, '_blank', 'noopener,noreferrer')
 }
 
 function formatDate(value) {
@@ -761,7 +787,7 @@ onUnmounted(() => {
                     v-if="comment.attachment_url"
                     type="button"
                     class="link-button"
-                    @click="openAttachment(comment.attachment_url)"
+                    @click="openAttachment(comment)"
                   >
                     📎 {{ t(
                       'Переглянути файл',

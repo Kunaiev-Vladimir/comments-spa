@@ -21,9 +21,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from comments.views import view_txt_attachment
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/comments/<int:comment_id>/attachment/txt/',
+         view_txt_attachment, name='view_txt_attachment'),
     path('api/comments/', include('comments.urls', namespace='comments')),
     path('captcha/', include('captcha.urls')),
 ]
