@@ -381,11 +381,24 @@ function mediaUrl(url) {
       return ''
     }
 
-    if (!parsed.pathname.startsWith('/media/')) {
-      return ''
+    // Локальные файлы: PyCharm и Docker
+    if (
+      parsed.origin === window.location.origin &&
+      parsed.pathname.startsWith('/media/')
+    ) {
+      return parsed.pathname + parsed.search
     }
 
-    return parsed.pathname + parsed.search
+    // Облачные файлы: Cloudinary
+    if (
+      parsed.protocol === 'https:' &&
+      parsed.hostname === 'res.cloudinary.com' &&
+      /^\/[^/]+\/(image|raw)\/upload\//.test(parsed.pathname)
+    ) {
+      return parsed.href
+    }
+
+    return ''
   } catch {
     return ''
   }
