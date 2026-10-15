@@ -1,0 +1,45 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #273444;
+  background-color: #f2f5f9;
+  font-synthesis: none;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+textarea,
+select {
+  color: #273444;
+  background-color: #ffffff;
+}
+
+.toolbar button,
+.secondary {
+  color: #243b53;
+  background-color: #f8fafc;
+}
+
+.panel h2,
+.panel h3 {
+  color: #243b53;
+}
+
+.primary {
+  color: #ffffff;
+  background-color: #2563eb;
+}

@@ -1,0 +1,45 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django local database and user uploads
+db.sqlite3
+db.sqlite3-*
+/media/
+
+# Django logs and temporary files
+*.log
+*.sqlite3
+
+# PyCharm and VS Code
+.idea/
+.vscode/
+
+# Vue / Node.js
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+dist/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Test and cache folders
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
