@@ -12,6 +12,8 @@ The application is deployed on Render and uses Neon PostgreSQL for database stor
 
 The deployed version supports comments, nested replies, CAPTCHA validation, file uploads, and real-time updates through WebSocket.
 
+**Video demonstration:** [Watch the project demo (MP4)](https://github.com/Kunaiev-Vladimir/comments-spa/releases/tag/v1.0.0)
+
 ## Tech Stack
 
 **Backend:** Python 3.14, Django 6.1, Django REST Framework, Django Channels, Daphne.
