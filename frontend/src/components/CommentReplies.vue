@@ -41,7 +41,7 @@ function safeText(value) {
         <button
           v-if="reply.attachment_url"
           type="button"
-          @click="emit('attachment', reply.attachment_url)"
+          @click="emit('attachment', reply)"
         >
           📎 Переглянути / Посмотреть / View
         </button>
