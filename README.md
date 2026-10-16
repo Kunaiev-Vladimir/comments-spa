@@ -4,6 +4,14 @@ A single-page comments application developed as a Junior Python Developer test a
 
 The project supports nested comments, CAPTCHA validation, file attachments, sorting, pagination, HTML validation, and real-time updates using WebSocket.
 
+## Live Demo
+
+**Deployed application:** <https://comments-spa-c83f.onrender.com/>
+
+The application is deployed on Render and uses Neon PostgreSQL for database storage and Cloudinary for persistent file attachments.
+
+The deployed version supports comments, nested replies, CAPTCHA validation, file uploads, and real-time updates through WebSocket.
+
 ## Tech Stack
 
 **Backend:** Python 3.14, Django 6.1, Django REST Framework, Django Channels, Daphne.
@@ -194,14 +202,56 @@ comments-spa/
 ├── frontend/               # Vue.js application
 ├── nginx/                  # Reverse proxy configuration
 ├── Dockerfile              # Django container
+├── Dockerfile.render       # Production Docker image for Render
 ├── compose.yaml            # Docker services
 ├── requirements.txt        # Python dependencies
+├── comments_spa.mwb        # Database EER diagram (MySQL Workbench)
 ├── .dockerignore
 ├── .gitignore
 ├── .env.example
 ├── manage.py
 └── README.md
 ```
+
+## Database Schema
+
+The database schema is documented in the `comments_spa.mwb` file, located in the project root.
+
+To view the EER diagram:
+
+1. Install MySQL Workbench 8.0 CE.
+2. Open MySQL Workbench.
+3. Select **File → Open Model**.
+4. Choose `comments_spa.mwb`.
+
+The diagram includes two application tables:
+
+- `comments_comment` — stores comments and nested replies.
+- `comments_commentattachment` — stores file attachment references.
+
+The diagram shows the self-referencing relationship for nested comments and the one-to-one relationship between comments and attachments.
+
+**Note:** The application uses PostgreSQL. The MySQL Workbench model is provided for database structure visualization only and is not used to initialize the PostgreSQL database. Django migrations manage the actual database schema.
+
+## Production Deployment
+
+The live application is deployed on Render:
+
+<https://comments-spa-c83f.onrender.com/>
+
+The production environment uses:
+
+- **Render** — hosting and Docker-based application deployment.
+- **Neon PostgreSQL** — persistent PostgreSQL database.
+- **Cloudinary** — persistent storage for JPG, PNG, GIF, and TXT attachments.
+- **Django Channels and Daphne** — WebSocket communication.
+- **Nginx** — reverse proxy.
+
+The production configuration uses `Dockerfile.render` and `nginx/render.conf`.
+
+The local Docker environment uses PostgreSQL and local media storage. In production, uploaded attachments are stored in Cloudinary so they remain available after application redeployment.
+
+Sensitive environment variables and service credentials are configured outside the Git repository.
 
 ## Security
 
